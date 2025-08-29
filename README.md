@@ -4,7 +4,7 @@ A Telegram bot that monitors cryptocurrency prices and sends notifications when 
 
 ## Features
 
-- 📊 Monitors 5 cryptocurrencies: BTC, ETH, ADA, SOL, LINK
+- 📊 Monitors 5 cryptocurrencies: BTC, ETH, XRP, SOL, LTC
 - 🎯 Dual threshold system: Realistic and Optimistic price targets
 - 📱 Real-time Telegram notifications when targets are reached
 - 🔄 Automatic price checking every 5 minutes (configurable)
@@ -113,13 +113,13 @@ Time: 2024-01-15 16:45:10
 
 ## Monitored Cryptocurrencies
 
-| Symbol | Name      | Default Realistic | Default Optimistic |
+| Symbol | Name      | Current Realistic | Current Optimistic |
 |--------|-----------|-------------------|---------------------|
-| BTC    | Bitcoin   | $50,000          | $75,000            |
-| ETH    | Ethereum  | $3,000           | $5,000             |
-| ADA    | Cardano   | $1.00            | $2.50              |
-| SOL    | Solana    | $100             | $200               |
-| LINK   | Chainlink | $25              | $50                |
+| BTC    | Bitcoin   | $120,000         | $122,000           |
+| ETH    | Ethereum  | $4,700           | $4,800             |
+| XRP    | Ripple    | $3.00            | $3.03              |
+| SOL    | Solana    | $215             | $216               |
+| LTC    | Litecoin  | $115             | $117               |
 
 ## Customization
 
@@ -141,35 +141,3 @@ Update the `realistic_price` and `optimistic_price` values in `config.py`
 - Console output shows real-time monitoring
 - Includes price checks, notifications sent, and any errors
 
-## Troubleshooting
-
-### Bot Not Responding
-- Verify your bot token is correct
-- Ensure the bot is not blocked
-- Check that you've started a conversation with the bot
-
-### No Notifications
-- Verify your chat ID is correct
-- Check the logs for API errors
-- Ensure your .env file is properly configured
-
-### Price Data Issues
-- The bot uses CoinGecko's free API (no key required)
-- If prices aren't updating, check your internet connection
-- API rate limits are handled automatically
-
-## Running in Production
-
-For production deployment, consider:
-
-1. **Process Management**: Use `systemd`, `supervisor`, or `pm2`
-2. **Monitoring**: Set up health checks and restart policies
-3. **Security**: Keep your bot token secure and use environment variables
-4. **Scaling**: The free CoinGecko API has rate limits for heavy usage
-
-## Support
-
-If you encounter issues:
-1. Check the console output for error messages
-2. Verify your configuration in `.env` and `config.py`
-3. Test your bot token and chat ID manually
