@@ -29,7 +29,7 @@ CRYPTO_CONFIG = {
         "coingecko_id": "solana"
     },
     "litecoin": {
-        "symbol": "ltc",
+        "symbol": "LTC",
         "realistic_price": 115,     # USD
         "optimistic_price": 117,    # USD
         "coingecko_id": "litecoin"
