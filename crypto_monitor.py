@@ -12,7 +12,6 @@ from typing import Dict, Optional
 from dotenv import load_dotenv
 from telegram import Bot
 from telegram.error import TelegramError
-import schedule
 
 from config import CRYPTO_CONFIG, COINGECKO_API_URL, DEFAULT_CHECK_INTERVAL
 
@@ -205,41 +204,25 @@ class CryptoPriceMonitor:
         message += f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         self.send_notification(message)
     
-    def start_monitoring(self):
-        """Start the price monitoring scheduler"""
-        logger.info(f"Starting price monitoring (checking every {self.check_interval} minutes)")
-        
-        # Send initial status
-        self.send_notification("🤖 Crypto Price Monitor Started!")
-        self.send_status_update()
-        
-        # Schedule price checks
-        schedule.every(self.check_interval).minutes.do(self.monitor_prices)
-        
-        # Schedule daily status updates (at 9 AM)
-        schedule.every().day.at("09:00").do(self.send_status_update)
-        
-        try:
-            while True:
-                schedule.run_pending()
-                time.sleep(60)  # Check every minute for scheduled tasks
-                
-        except KeyboardInterrupt:
-            logger.info("Monitoring stopped by user")
-            self.send_notification("🛑 Crypto Price Monitor Stopped")
-        except Exception as e:
-            logger.error(f"Error in monitoring loop: {e}")
-            self.send_notification(f"❌ Monitor error: {str(e)}")
-
-
 if __name__ == "__main__":
     try:
         monitor = CryptoPriceMonitor()
-        monitor.start_monitoring()
+        # Send initial status
+        monitor.send_notification("🤖 Crypto Price Monitor Started!")
+        monitor.send_status_update()
+        
+        # Simple monitoring loop
+        logger.info(f"Starting price monitoring (checking every {monitor.check_interval} minutes)")
+        while True:
+            monitor.monitor_prices()
+            time.sleep(monitor.check_interval * 60)
+            
     except ValueError as e:
         logger.error(f"Configuration error: {e}")
         print(f"Configuration error: {e}")
         print("Please check your .env file and ensure TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are set")
+    except KeyboardInterrupt:
+        logger.info("Monitoring stopped by user")
     except Exception as e:
         logger.error(f"Unexpected error: {e}")
         print(f"Unexpected error: {e}")
